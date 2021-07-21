@@ -2,17 +2,21 @@
 
 {% block content %}
 <article class="post">
-    <aside class="actions">
-        {% if user.is_authenticated %}
-        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">
-            {% include './icons/pencil-fill.svg' %}
-        </a>
-        {% endif %}
-    </aside>
     {% if post.published_date %}
-    <time class="date">
+    <div class="date">
         {{ post.published_date }}
-    </time>
+    </div>
+    {% else %}
+    <div class="top-menu">
+        <a href="{% url 'post_remove' pk=post.pk %}" class=" btn btn-default"  >
+            {% load static %}
+            <img src="{% static 'icons/x-lg.svg' %}" style="width: 20px;height: 20px;" class="src ">
+        </a>
+        <a href="{% url 'post_edit' pk=post.pk %}" class=" btn btn-default"  >
+            {% load static %}
+            <img src="{% static 'icons/pencil-fill.svg' %}" style="width: 20px;height: 20px;" class="src ">
+        </a>
+        <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}"><strong>Publish</strong> </a></div>
     {% endif %}
     <h2>{{ post.title }}</h2>
     <p>{{ post.text|linebreaksbr }}</p>
